@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-
+      this.belongsToMany(models.genres, {
+        through: "bookGenres",
+        foreignKey: "bookId",
+      });
     }
   }
   books.init(
@@ -23,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       publisher: DataTypes.STRING,
       year: DataTypes.STRING,
       clasification: DataTypes.STRING,
-      booksGenres : DataTypes.ARRAY(DataTypes.STRING),
       review_keys: DataTypes.ARRAY(DataTypes.STRING),
       review_point: DataTypes.INTEGER,
       isAvailable: DataTypes.BOOLEAN,
@@ -31,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "books",
+      timestamps: true
     }
   );
   return books;
