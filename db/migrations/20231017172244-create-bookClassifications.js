@@ -3,20 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("genres", {
-      id: {
-        type:Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      name: { type:Sequelize.STRING, allowNull: false },
-      createdAt: {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+    await queryInterface.createTable("bookClassifications", {
+      bookId: {
+        type: Sequelize.UUID,
         allowNull: false,
-        type: Sequelize.DATE,
       },
-      updatedAt: {
+      classificationId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.DATE,
       },
     });
   },
@@ -28,6 +28,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('genres');
+
+    await queryInterface.dropTable("bookClassifications");
   },
 };

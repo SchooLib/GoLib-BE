@@ -1,33 +1,23 @@
 const {
-  createBook,
-  readBooks,
-  readBook,
-  deleteBooks,
-  editBook,
-} = require("../services/bookServices");
-const {
-  removeClassificationBooks,
-  createClassificationBooks,
+  createClassification,
+  readClassifications,
+  readClassification,
+  editClassifications,
+  removeClassifications,
 } = require("../services/classificationServices");
 
-exports.addBook = async (req, res) => {
+exports.addClassifications = async (req, res) => {
   try {
-    const newBook = await createBook(req.body);
-
-    if (req.body.classifications) {
-      createClassificationBooks({
-        bookId: newBook.id,
-        classificationId: req.body.classifications,
-      });
-    }
+    const newClassification = await createClassification(req.body);
 
     res.status(200).json({
       meta: {
         status: "success",
-        message: "The book has been successfully added to the database.",
+        message:
+          "The classification has been successfully added to the database.",
         code: 200,
       },
-      data : newBook
+      data: newClassification,
     });
   } catch (error) {
     res.status(400).json({
@@ -41,16 +31,16 @@ exports.addBook = async (req, res) => {
   }
 };
 
-exports.retriveBooks = async (req, res) => {
+exports.retriveClassifications = async (req, res) => {
   try {
-    const books = await readBooks();
+    const classifications = await readClassifications();
     res.status(200).json({
       meta: {
         status: "success",
-        message: "Books retrieved successfully",
+        message: "classifications retrieved successfully",
         code: 200,
       },
-      data: books,
+      data: classifications,
     });
   } catch (error) {
     res.status(400).json({
@@ -64,35 +54,11 @@ exports.retriveBooks = async (req, res) => {
   }
 };
 
-exports.retriveBook = async (req, res) => {
+exports.retriveClassification = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await readBook(id);
-    res.status(200).json({
-      meta: {
-        status: "success",
-        message: "Book retrieved successfully",
-        code: 200,
-      },
-      data: book,
-    });
-  } catch (error) {
-    res.status(400).json({
-      meta: {
-        status: "failed",
-        message: error.message,
-        code: 400,
-      },
-      data: {},
-    });
-  }
-};
-
-exports.updateBooks = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const book = await readBook(id);
-    if (!book) {
+    const classification = await readClassification(id);
+    if (!classification) {
       res.status(404).json({
         meta: {
           status: "success",
@@ -103,25 +69,13 @@ exports.updateBooks = async (req, res) => {
       });
       return;
     }
-    const updatedBook = await editBook(id, req.body);
-
-    if (req.body.classifications) {
-      await removeClassificationBooks(id);
-      for (const classificationId of req.body.classifications) {
-        await createClassificationBooks({
-          bookId: book.id,
-          classificationId: classificationId,
-        });
-      }
-    }
-
     res.status(200).json({
       meta: {
         status: "success",
-        message: "Book updated successfully",
+        message: "classification retrieved successfully",
         code: 200,
       },
-      data: await readBook(id),
+      data: classification,
     });
   } catch (error) {
     res.status(400).json({
@@ -135,11 +89,11 @@ exports.updateBooks = async (req, res) => {
   }
 };
 
-exports.removeBooks = async (req, res) => {
+exports.updateClassifications = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await readBook(id);
-    if (!book) {
+    const classification = await readClassification(id);
+    if (!classification) {
       res.status(404).json({
         meta: {
           status: "success",
@@ -150,15 +104,51 @@ exports.removeBooks = async (req, res) => {
       });
       return;
     }
+    const updatedData = await editClassifications(id, req.body);
 
-    const deletedBook = await deleteBooks(book);
     res.status(200).json({
       meta: {
         status: "success",
-        message: "Book deleted successfully",
+        message: "classification updated successfully",
         code: 200,
       },
-      data: deletedBook,
+      data: updatedData,
+    });
+  } catch (error) {
+    res.status(400).json({
+      meta: {
+        status: "failed",
+        message: error.message,
+        code: 400,
+      },
+      data: {},
+    });
+  }
+};
+
+exports.deleteClassifications = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const classification = await readClassification(id);
+    if (!classification) {
+      res.status(404).json({
+        meta: {
+          status: "success",
+          message: `Book with id ${id} not found!`,
+          code: 404,
+        },
+        data: {},
+      });
+      return;
+    }
+    const deletedData = await removeClassifications(id);
+    res.status(200).json({
+      meta: {
+        status: "success",
+        message: "classification deleted successfully",
+        code: 200,
+      },
+      data: deletedData,
     });
   } catch (error) {
     res.status(400).json({

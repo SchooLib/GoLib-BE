@@ -13,7 +13,6 @@ module.exports = {
       image: { type: Sequelize.STRING, allowNull: false },
       publisher: { type: Sequelize.STRING, allowNull: false },
       year: { type: Sequelize.STRING, allowNull: false },
-      clasification: { type: Sequelize.STRING, allowNull: false },
       review_keys: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: false,

@@ -6,27 +6,18 @@ exports.createBook = (data) => {
 };
 
 exports.readBooks = () => {
-  return bookRepository.read().then((results) => {
-    const transformedResult = results.rows.map((book) => {
-      return {
-        ...book.dataValues,
-        genres: book.genres.map((genre) => genre.name),
-      };
-    });
-
-    const transformedResponse = {
-      count: results.count,
-      rows: transformedResult,
-    };
-
-    return transformedResponse;
-  });
+  return bookRepository.read()
 };
 
 exports.readBook = (id) => {
-  return bookRepository.readOne(id);
+  return bookRepository.readOne(id)
 };
+
+exports.editBook = (id, data) => {
+  return bookRepository.update(id, data)
+}
 
 exports.deleteBooks = (data) => {
   return bookRepository.delete(data);
 };
+
