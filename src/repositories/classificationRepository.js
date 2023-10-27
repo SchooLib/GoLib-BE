@@ -5,8 +5,11 @@ exports.create = (data) => {
   return classifications.create(data);
 };
 
-exports.read = () => {
-  return classifications.findAndCountAll();
+exports.read = (limit, offset) => {
+  return classifications.findAndCountAll({
+    limit,
+    offset: offset * limit,
+  });
 };
 
 exports.readOne = (id) => {
