@@ -4,8 +4,10 @@ exports.create = (data) => {
   return books.create(data);
 };
 
-exports.read = () => {
+exports.read = (limit, offset) => {
   return books.findAndCountAll({
+    limit,
+    offset: offset * limit,
     include: [
       {
         model: classifications,
