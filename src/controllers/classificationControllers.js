@@ -33,14 +33,39 @@ exports.addClassifications = async (req, res) => {
 
 exports.retriveClassifications = async (req, res) => {
   try {
-    const classifications = await readClassifications();
+
+    const offsetAsNumber = Number.parseInt(req.query.page);
+    const limitAsNumber = Number.parseInt(req.query.limit);
+
+    let page = 0;
+    if (!Number.isNaN(offsetAsNumber) && offsetAsNumber > 0) {
+      page = offsetAsNumber;
+    }
+
+    let size = 10;
+    if (
+      !Number.isNaN(limitAsNumber) &&
+      limitAsNumber > 0 &&
+      limitAsNumber < 10
+    ) {
+      size = limitAsNumber;
+    }
+
+
+    const classifications = await readClassifications(size, page);
+
     res.status(200).json({
       meta: {
         status: "success",
         message: "classifications retrieved successfully",
         code: 200,
       },
-      data: classifications,
+      data: {
+        totalContents: classifications.count,
+        totalPages: Math.ceil(classifications.count / size),
+        currentPage: page,
+        contents: classifications.rows,
+      },
     });
   } catch (error) {
     res.status(400).json({

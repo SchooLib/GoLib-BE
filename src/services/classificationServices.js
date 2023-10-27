@@ -5,8 +5,8 @@ exports.createClassification = (data) => {
   return classificationRepository.create(data);
 };
 
-exports.readClassifications = () => {
-  return classificationRepository.read();
+exports.readClassifications = (limit, offset) => {
+  return classificationRepository.read(limit, offset);
 };
 
 exports.readClassification = (id) => {

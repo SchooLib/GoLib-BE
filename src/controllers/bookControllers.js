@@ -56,7 +56,24 @@ exports.addBook = async (req, res) => {
 
 exports.retriveBooks = async (req, res) => {
   try {
-    const books = await readBooks();
+    const offsetAsNumber = Number.parseInt(req.query.page);
+    const limitAsNumber = Number.parseInt(req.query.limit);
+
+    let page = 0;
+    if (!Number.isNaN(offsetAsNumber) && offsetAsNumber > 0) {
+      page = offsetAsNumber;
+    }
+
+    let size = 10;
+    if (
+      !Number.isNaN(limitAsNumber) &&
+      limitAsNumber > 0 &&
+      limitAsNumber < 10
+    ) {
+      size = limitAsNumber;
+    }
+
+    const books = await readBooks(size, page);
 
     // Map the books and create a modified response
     const modifiedBooks = books.rows.map((book) => {
@@ -85,8 +102,10 @@ exports.retriveBooks = async (req, res) => {
         code: 200,
       },
       data: {
-        count: books.count,
-        rows: modifiedBooks,
+        totalContents: books.count,
+        totalPages: Math.ceil(books.count / size),
+        currentPage: page,
+        contents: modifiedBooks,
       },
     });
   } catch (error) {
@@ -182,8 +201,7 @@ exports.updateBooks = async (req, res) => {
       }
     }
 
-
-    const newUpdatedBook = await readBook(id)
+    const newUpdatedBook = await readBook(id);
     res.status(200).json({
       meta: {
         status: "success",
