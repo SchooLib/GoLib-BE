@@ -19,9 +19,9 @@ exports.addAchievement = async (req, res) => {
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully added achievement!",
-        code: 200,
       },
       data: {
         ...newAchievement?.dataValues,
@@ -33,9 +33,9 @@ exports.addAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -63,9 +63,10 @@ exports.showAllAchievements = async (req, res) => {
     }
 
     const achievements = await readAllAchievements(size, page);
+    console.log(achievements);
 
     // Map the achievements and create a modified response
-    const modifiedAchievements = achievements.rows.map((achievement) => {
+    const modifiedAchievements = achievements.map((achievement) => {
       // Include only the necessary properties
       return {
         id: achievement.id,
@@ -86,9 +87,9 @@ exports.showAllAchievements = async (req, res) => {
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully show all achievements!",
-        code: 200,
       },
       data: {
         totalContents: achievements.count,
@@ -100,9 +101,9 @@ exports.showAllAchievements = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -118,18 +119,18 @@ exports.showAchievement = async (req, res) => {
     if (!achievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `Achievement with id ${id} not found!`,
-          code: 404,
         },
       });
     }
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully show achievement!",
-        code: 200,
       },
       data: {
         ...achievement?.dataValues,
@@ -141,9 +142,9 @@ exports.showAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -159,9 +160,9 @@ exports.updateAchievement = async (req, res) => {
     if (!achievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `Achievement with id ${id} not found!`,
-          code: 404,
         },
         data: {},
       });
@@ -186,9 +187,9 @@ exports.updateAchievement = async (req, res) => {
     const newUpdatedAchievement = await readAchievement(id);
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully updated achievement!",
-        code: 200,
       },
       data: {
         ...newUpdatedAchievement?.dataValues,
@@ -200,9 +201,9 @@ exports.updateAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -218,9 +219,9 @@ exports.removeAchievement = async (req, res) => {
     if (!achievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `Achievement with id ${id} not found!`,
-          code: 404,
         },
         data: {},
       });
@@ -241,18 +242,18 @@ exports.removeAchievement = async (req, res) => {
     
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully deleted achievement!",
-        code: 200,
       },
       data: deletedAchievement,
     });
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });

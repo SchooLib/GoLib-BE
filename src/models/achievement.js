@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static associate(models) {
-      // this.hasMany(models.UserAchievement, { foreignKey: "achievementId" });
+      // this.hasMany(models.userAchievement, { foreignKey: "achievementId" });
     }
   }
 
@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       title: {
         type: DataTypes.STRING,
@@ -50,14 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        defaultValue: true,
       },
     },
     {

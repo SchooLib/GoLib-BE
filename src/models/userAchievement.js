@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // this.belongsTo(models.User, { foreignKey: "userId" });
-      // this.belongsTo(models.Achievement, { foreignKey: "achievementId" });
+      // this.belongsTo(models.achievement, { foreignKey: "achievementId" });
     }
   }
 
@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       userId: {
         type: DataTypes.INTEGER,

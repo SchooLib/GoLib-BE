@@ -15,9 +15,9 @@ exports.addUserAchievement = async (req, res) => {
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully added userAchievement!",
-        code: 200,
       },
       data: {
         ...newUserAchievement?.dataValues,
@@ -26,9 +26,9 @@ exports.addUserAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -73,9 +73,9 @@ exports.showAllUserAchievements = async (req, res) => {
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully show all userAchievements!",
-        code: 200,
       },
       data: {
         totalContents: userAchievements.count,
@@ -87,9 +87,9 @@ exports.showAllUserAchievements = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -105,18 +105,18 @@ exports.showUserAchievement = async (req, res) => {
     if (!userAchievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `User Achievement with id ${id} not found!`,
-          code: 404,
         },
       });
     }
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully show userAchievement!",
-        code: 200,
       },
       data: {
         ...userAchievement?.dataValues,
@@ -125,9 +125,9 @@ exports.showUserAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -143,9 +143,9 @@ exports.updateUserAchievement = async (req, res) => {
     if (!userAchievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `User Achievement with id ${id} not found!`,
-          code: 404,
         },
         data: {},
       });
@@ -159,9 +159,9 @@ exports.updateUserAchievement = async (req, res) => {
     const newUpdatedUserAchievement = await readUserAchievement(id);
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully updated user Achievement!",
-        code: 200,
       },
       data: {
         ...newUpdatedUserAchievement?.dataValues,
@@ -170,9 +170,9 @@ exports.updateUserAchievement = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });
@@ -188,9 +188,9 @@ exports.removeUserAchievement = async (req, res) => {
     if (!userAchievement) {
       res.status(404).json({
         meta: {
+          code: 404,
           status: "failed",
           message: `UserAchievement with id ${id} not found!`,
-          code: 404,
         },
         data: {},
       });
@@ -201,18 +201,18 @@ exports.removeUserAchievement = async (req, res) => {
 
     res.status(200).json({
       meta: {
+        code: 200,
         status: "success",
         message: "Successfully deleted user Achievement!",
-        code: 200,
       },
       data: deletedUserAchievement,
     });
   } catch (error) {
     res.status(400).json({
       meta: {
+        code: 400,
         status: "failed",
         message: error.message,
-        code: 400,
       },
       data: {},
     });

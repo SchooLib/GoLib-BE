@@ -3,12 +3,11 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Achievement", {
+    await queryInterface.createTable("Achievements", {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       title: {
         type: Sequelize.STRING,
@@ -40,11 +39,11 @@ module.exports = {
         allowNull: false,
         defaultValue: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -52,6 +51,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Achievement");
+    await queryInterface.dropTable("Achievements");
   },
 };
