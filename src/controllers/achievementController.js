@@ -1,6 +1,7 @@
-const { config } = require("dotenv");
 const { signInWithEmailAndPassword } = require("firebase/auth");
 const { storage, auth } = require("../../config/firebase");
+const { ref, deleteObject } = require("firebase/storage");
+const config = require("../../config/config");
 const {
   createAchievement,
   readAllAchievements,
@@ -229,6 +230,7 @@ exports.removeAchievement = async (req, res) => {
     }
 
     if (achievement.image) {
+      console.log("achiv-img : ");
       await signInWithEmailAndPassword(
         auth,
         config.firebaseUser,
