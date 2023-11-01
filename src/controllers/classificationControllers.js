@@ -14,7 +14,7 @@ exports.addClassifications = async (req, res) => {
       meta: {
         status: "success",
         message:
-          "The classification has been successfully added to the database.",
+          "The classification has been added to the database successfully!",
         code: 200,
       },
       data: newClassification,
@@ -57,7 +57,7 @@ exports.retriveClassifications = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: "classifications retrieved successfully",
+        message: "Classifications successfully retrieved!",
         code: 200,
       },
       data: {
@@ -97,7 +97,7 @@ exports.retriveClassification = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: "classification retrieved successfully",
+        message: "The classification successfully retrieved! ",
         code: 200,
       },
       data: classification,
@@ -134,7 +134,7 @@ exports.updateClassifications = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: "classification updated successfully",
+        message: "The classification successfully updated! ",
         code: 200,
       },
       data: updatedData,
@@ -170,7 +170,7 @@ exports.deleteClassifications = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: "classification deleted successfully",
+        message: "The classification successfully deleted!",
         code: 200,
       },
       data: deletedData,
