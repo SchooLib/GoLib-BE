@@ -7,6 +7,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+const userRouter=require("./routes/users")
 const classificationsRouter = require("./routes/classifications");
 
 const cors = require("cors");
@@ -29,6 +30,7 @@ const prefix = "/api/v1";
 app.use(`${prefix}/users`, usersRouter);
 app.use(`${prefix}/books`, booksRouter);
 app.use(`${prefix}/classifications`, classificationsRouter);
+app.use(`${prefix}/user`,userRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
