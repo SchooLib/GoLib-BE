@@ -1,4 +1,4 @@
-const { books, classifications } = require("../models");
+const { books, classifications, bookReviews, User } = require("../models");
 
 exports.create = (data) => {
   return books.create(data);
@@ -9,6 +9,11 @@ exports.read = (limit, offset) => {
     limit,
     offset: offset * limit,
     include: [
+      {
+        model: bookReviews,
+        attributes: ["id"],
+        as: "reviews",
+      },
       {
         model: classifications,
         as: "classifications",
@@ -25,6 +30,16 @@ exports.readOne = (id) => {
       id,
     },
     include: [
+      {
+        model: bookReviews,
+        attributes: ["id", "content", "rating", "userId"],
+        as: "reviews",
+        include: {
+          model: User,
+          attributes: ["username", "img"],
+          as: "user"
+        }
+      },
       {
         model: classifications,
         as: "classifications",
@@ -45,4 +60,8 @@ exports.update = (id, data) => {
 
 exports.delete = (data) => {
   return data.destroy();
+};
+
+exports.post = (data) => {
+  return bookReviews.create(data);
 };

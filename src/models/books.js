@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(models.classifications, {
         through: "bookClassifications",
       });
+      this.hasMany(models.bookReviews, {
+        foreignKey: 'bookId',
+        as: 'reviews' // this is an alias for the association
+      });
     }
   }
   books.init(
@@ -13,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+        primaryKey: true,
       },
       title: DataTypes.STRING,
       image: DataTypes.STRING,
@@ -26,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "books",
-      timestamps: true
+      timestamps: true,
     }
   );
   return books;

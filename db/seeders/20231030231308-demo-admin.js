@@ -6,6 +6,7 @@ const { Encription } = require('../../src/middleware/bicrypt');
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Users', [{
+      id: "a7a4483f-5bda-416b-ba58-c68c6506983e",
       fullName: 'GenerasiGiGih',
       username: 'generasigigih',
       password: await Encription('gigih'),

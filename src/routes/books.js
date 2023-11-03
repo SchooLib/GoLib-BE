@@ -6,14 +6,20 @@ const {
   retriveBook,
   removeBooks,
   updateBooks,
+  reviewBook,
 } = require("../controllers/bookControllers");
 const { upload } = require("../middleware/multerMiddleware");
 const useFirebase = require("../middleware/firebaseMiddleware");
+const {
+  authentificationUser,
+  authentificationAdmin,
+} = require("../middleware/token");
 
 router.get("/", retriveBooks);
 router.get("/:id", retriveBook);
-router.post("/", upload, useFirebase, addBook);
-router.put("/:id", upload, useFirebase, updateBooks);
-router.delete("/:id", removeBooks);
+router.post("/", authentificationAdmin, upload, useFirebase, addBook);
+router.put("/:id", authentificationAdmin, upload, useFirebase, updateBooks);
+router.delete("/:id", authentificationAdmin, removeBooks);
+router.post("/review", authentificationAdmin, reviewBook);
 
 module.exports = router;

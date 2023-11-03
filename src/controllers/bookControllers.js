@@ -6,6 +6,7 @@ const {
   readBook,
   deleteBooks,
   editBook,
+  createRiviews,
 } = require("../services/bookServices");
 const {
   removeClassificationBooks,
@@ -64,11 +65,11 @@ exports.retriveBooks = async (req, res) => {
       page = offsetAsNumber;
     }
 
-    let size = 10;
+    let size = 1000000;
     if (
       !Number.isNaN(limitAsNumber) &&
       limitAsNumber > 0 &&
-      limitAsNumber < 10
+      limitAsNumber < 1000000
     ) {
       size = limitAsNumber;
     }
@@ -104,7 +105,7 @@ exports.retriveBooks = async (req, res) => {
       data: {
         totalContents: books.count,
         totalPages: Math.ceil(books.count / size),
-        currentPage: page,
+        currentPage: page + 1,
         contents: modifiedBooks,
       },
     });
@@ -271,6 +272,29 @@ exports.removeBooks = async (req, res) => {
         code: 400,
       },
       data: {},
+    });
+  }
+};
+
+exports.reviewBook = async (req, res) => {
+  try {
+    const newRiview = await createRiviews({ ...req.body, userId: req.user.id });
+    res.json({
+      meta: {
+        status: "success",
+        message: "Book review posted successfully!",
+        code: 200,
+      },
+      data: newRiview,
+    });
+  } catch (error) {
+    res.status(400).json({
+      meta: {
+        status: "failed",
+        message: error.message,
+        code: 400,
+      },
+      data: error.message,
     });
   }
 };

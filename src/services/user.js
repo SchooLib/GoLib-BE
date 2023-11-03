@@ -1,6 +1,7 @@
 const { Encription, Decript } = require('../middleware/bicrypt');
 const { creataeToken } = require('../middleware/token');
 const repositories=require('../repositories/user')
+
 exports.createUser=async(data)=>{
     const password=await Encription(data.password)
     return repositories.createUser({...data,password})

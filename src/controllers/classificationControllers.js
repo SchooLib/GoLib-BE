@@ -42,11 +42,11 @@ exports.retriveClassifications = async (req, res) => {
       page = offsetAsNumber;
     }
 
-    let size = 10;
+    let size = 100000;
     if (
       !Number.isNaN(limitAsNumber) &&
       limitAsNumber > 0 &&
-      limitAsNumber < 10
+      limitAsNumber < 100000
     ) {
       size = limitAsNumber;
     }
@@ -63,7 +63,7 @@ exports.retriveClassifications = async (req, res) => {
       data: {
         totalContents: classifications.count,
         totalPages: Math.ceil(classifications.count / size),
-        currentPage: page,
+        currentPage: page + 1,
         contents: classifications.rows,
       },
     });
