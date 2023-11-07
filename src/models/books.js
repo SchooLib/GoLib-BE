@@ -2,14 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class books extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       this.belongsToMany(models.classifications, {
         through: "bookClassifications",
+      });
+      this.hasMany(models.bookReviews, {
+        foreignKey: 'bookId',
+        as: 'reviews' // this is an alias for the association
       });
     }
   }
@@ -18,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+        primaryKey: true,
       },
       title: DataTypes.STRING,
       image: DataTypes.STRING,
@@ -31,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "books",
-      timestamps: true
+      timestamps: true,
     }
   );
   return books;

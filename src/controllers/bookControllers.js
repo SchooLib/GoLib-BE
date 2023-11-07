@@ -6,6 +6,7 @@ const {
   readBook,
   deleteBooks,
   editBook,
+  createRiviews,
 } = require("../services/bookServices");
 const {
   removeClassificationBooks,
@@ -14,6 +15,7 @@ const {
 
 const { ref, deleteObject } = require("firebase/storage");
 const config = require("../../config/config");
+const { updateUser, getUserById } = require("../services/user");
 
 exports.addBook = async (req, res) => {
   try {
@@ -64,11 +66,11 @@ exports.retriveBooks = async (req, res) => {
       page = offsetAsNumber;
     }
 
-    let size = 10;
+    let size = 1000000;
     if (
       !Number.isNaN(limitAsNumber) &&
       limitAsNumber > 0 &&
-      limitAsNumber < 10
+      limitAsNumber < 1000000
     ) {
       size = limitAsNumber;
     }
@@ -104,7 +106,7 @@ exports.retriveBooks = async (req, res) => {
       data: {
         totalContents: books.count,
         totalPages: Math.ceil(books.count / size),
-        currentPage: page,
+        currentPage: page + 1,
         contents: modifiedBooks,
       },
     });
@@ -167,7 +169,7 @@ exports.updateBooks = async (req, res) => {
     if (!book) {
       res.status(404).json({
         meta: {
-          status: "success",
+          status: "failed",
           message: `Book with id ${id} not found!`,
           code: 404,
         },
@@ -271,6 +273,49 @@ exports.removeBooks = async (req, res) => {
         code: 400,
       },
       data: {},
+    });
+  }
+};
+
+exports.reviewBook = async (req, res) => {
+  try {
+    const newReview = await createRiviews({ ...req.body, userId: req.user.id });
+
+    let bonusPoints = 0;
+
+    if (req.body.content) {
+      const totalKeys = req.body.key.length;
+      const includedKeys = req.body.key.filter((keyword) =>
+        req.body.content.includes(keyword)
+      ).length;
+
+      if (includedKeys === totalKeys) {
+        bonusPoints = req.body.point;
+      } else if (includedKeys === 1) {
+        bonusPoints = req.body.point * 0.2;
+      } else {
+        bonusPoints = req.body.point * 0.5;
+      }
+      const user = await getUserById(req.user.id);
+      await updateUser(req.user.id, { point: bonusPoints + user.point });
+    }
+
+    res.json({
+      meta: {
+        status: "success",
+        message: `Book review posted successfully! user got ${bonusPoints} point`,
+        code: 200,
+      },
+      data: newReview,
+    });
+  } catch (error) {
+    res.status(400).json({
+      meta: {
+        status: "failed",
+        message: error.message,
+        code: 400,
+      },
+      data: error.message,
     });
   }
 };

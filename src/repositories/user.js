@@ -1,41 +1,53 @@
-const {User} = require('../models')
+const { User } = require("../models");
 
-exports.createUser=(data)=>{
-    return User.create(data)
-}
+exports.createUser = (data) => {
+  return User.create(data);
+};
 
-exports.getOneUser=(data)=>{
-    return User.findOne({
-        where:{nisn:data.nisn}
-    })
-}
+exports.getOneUser = (data) => {
+  return User.findOne({
+    where: { nisn: data.nisn },
+  });
+};
 
-exports.getOneLoginAdmin=(data)=>{
-    return User.findOne({
-        where:{username:data.username}
-    })
-}
+exports.getOneLoginAdmin = (data) => {
+  return User.findOne({
+    where: { username: data.username },
+  });
+};
 
-exports.getUserById=(id)=>{
-    return User.findOne({
-        where:{id:id}
-    })
-}
+exports.getUserById = (id) => {
+  return User.findOne({
+    where: { id: id },
+  });
+};
 
-exports.getAllUsers=()=>{
-    return User.findAll({
-        where:{role:"user"}
-    })
-}
+exports.getUserByUsername = (username) => {
+  return User.findOne({
+    where: { username },
+  });
+};
 
-exports.update=(id,data)=>{
-    return User.update(data,{
-        where:{
-            id,
-        },
-    })
-}
+exports.getUserByNisn = (nisn) => {
+  return User.findOne({
+    where: { nisn },
+  });
+};
 
-exports.delete=(data)=>{
-    return data.destroy()
-}
+exports.getAllUsers = () => {
+  return User.findAll({
+    where: { role: "user" },
+  });
+};
+
+exports.update = (id, data) => {
+  return User.update(data, {
+    where: {
+      id,
+    },
+  });
+};
+
+exports.delete = (data) => {
+  return data.destroy();
+};
