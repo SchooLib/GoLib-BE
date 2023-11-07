@@ -21,7 +21,7 @@ exports.authentificationUser = (req, res, next) => {
   const authHeader = head.split(" ");
 
   jwt.verify(authHeader[1], key, (err, data) => {
-    if (err || data.id != req.params.idUser)
+    if (err)
     // if (err || data.role != "user" || data.id != req.params.idUser)
       return res.status(401).json({
         meta: {
@@ -52,7 +52,7 @@ exports.authentificationAdmin = (req, res, next) => {
     // console.log({err, head: authHeader[1], key, role : data})
     if (err || data.role != "admin")
       return res.status(401).json({ message: "unauthorized" });
-    console.log(data);
+    // console.log(data);
     req.user = data;
     next();
   });

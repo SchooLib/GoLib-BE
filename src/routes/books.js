@@ -20,6 +20,6 @@ router.get("/:id", retriveBook);
 router.post("/", authentificationAdmin, upload, useFirebase, addBook);
 router.put("/:id", authentificationAdmin, upload, useFirebase, updateBooks);
 router.delete("/:id", authentificationAdmin, removeBooks);
-router.post("/review", authentificationAdmin, reviewBook);
+router.post("/review", authentificationUser, reviewBook);
 
 module.exports = router;

@@ -15,6 +15,7 @@ const {
 
 const { ref, deleteObject } = require("firebase/storage");
 const config = require("../../config/config");
+const { updateUser, getUserById } = require("../services/user");
 
 exports.addBook = async (req, res) => {
   try {
@@ -168,7 +169,7 @@ exports.updateBooks = async (req, res) => {
     if (!book) {
       res.status(404).json({
         meta: {
-          status: "success",
+          status: "failed",
           message: `Book with id ${id} not found!`,
           code: 404,
         },
@@ -278,14 +279,34 @@ exports.removeBooks = async (req, res) => {
 
 exports.reviewBook = async (req, res) => {
   try {
-    const newRiview = await createRiviews({ ...req.body, userId: req.user.id });
+    const newReview = await createRiviews({ ...req.body, userId: req.user.id });
+
+    let bonusPoints = 0;
+
+    if (req.body.content) {
+      const totalKeys = req.body.key.length;
+      const includedKeys = req.body.key.filter((keyword) =>
+        req.body.content.includes(keyword)
+      ).length;
+
+      if (includedKeys === totalKeys) {
+        bonusPoints = req.body.point;
+      } else if (includedKeys === 1) {
+        bonusPoints = req.body.point * 0.2;
+      } else {
+        bonusPoints = req.body.point * 0.5;
+      }
+      const user = await getUserById(req.user.id);
+      await updateUser(req.user.id, { point: bonusPoints + user.point });
+    }
+
     res.json({
       meta: {
         status: "success",
-        message: "Book review posted successfully!",
+        message: `Book review posted successfully! user got ${bonusPoints} point`,
         code: 200,
       },
-      data: newRiview,
+      data: newReview,
     });
   } catch (error) {
     res.status(400).json({

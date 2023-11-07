@@ -1,4 +1,5 @@
 const { succes, notFound } = require("../helper/response");
+const { getUserByNisn } = require("../repositories/user");
 const {
   createUser,
   getOneLogin,
@@ -10,9 +11,38 @@ const {
   getOneLoginAdmin,
 } = require("../services/user");
 
+const { ref, deleteObject } = require("firebase/storage");
+const config = require("../../config/config");
+const { signInWithEmailAndPassword } = require("firebase/auth");
+const { storage, auth } = require("../../config/firebase");
+
 exports.createUser = async (req, res) => {
   try {
-    const newUser = await createUser(req.body);
+    let existUser;
+    if (req.body.username) {
+      existUser = await getUserByNisn(req.body.username);
+    } else {
+      existUser = await getUserByNisn(req.body.nisn);
+    }
+
+    if (existUser) {
+      res.status(400).json({
+        meta: {
+          status: "failed",
+          message: `User allready exist!`,
+          code: 200,
+        },
+        data: {},
+      });
+      return;
+    }
+
+    const newUser = await createUser({
+      ...req.body,
+      img: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
+        req.imageName.split("/")[1]
+      }?alt=media`,
+    });
     res.status(200).json(succes("user", newUser));
   } catch (error) {
     res.status(400).json(notFound(error));
@@ -32,7 +62,11 @@ exports.loginUserAdmin = async (req, res) => {
   try {
     let data = req.body;
     const getOneUser = await getOneLoginAdmin(data);
-    data = { ...data, id: getOneUser.dataValues?.id, role: getOneUser.dataValues.role };
+    data = {
+      ...data,
+      id: getOneUser.dataValues?.id,
+      role: getOneUser.dataValues.role,
+    };
     const token = await getToken(data, getOneUser.dataValues?.password);
     res.status(200).json({
       meta: {
@@ -56,7 +90,11 @@ exports.loginUser = async (req, res) => {
   try {
     let data = req.body;
     const getOneUser = await getOneLogin(data);
-    data = { ...data, id: getOneUser.dataValues?.id, role: getOneUser.dataValues.role };
+    data = {
+      ...data,
+      id: getOneUser.dataValues?.id,
+      role: getOneUser.dataValues.role,
+    };
     const token = await getToken(data, getOneUser.dataValues?.password);
     res.status(200).json({
       meta: {
@@ -136,13 +174,43 @@ exports.getAllUser = async (req, res) => {
 exports.editUser = async (req, res) => {
   try {
     const idUser = req.params.idUser;
-    const userBody = req.body;
+    let userBody = req.body;
+
+    let existUser = await getUserById(idUser);
+
+    if (!existUser) {
+      res.status(404).json({
+        meta: {
+          status: "failed",
+          message: `User with id ${idUser} not found!`,
+          code: 404,
+        },
+        data: {},
+      });
+    }
+
+    if (req.imageName) {
+      await signInWithEmailAndPassword(
+        auth,
+        config.firebaseUser,
+        config.firebaseAuth
+      );
+      userBody = {
+        ...req.body,
+        img: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
+          req.imageName.split("/")[1]
+        }?alt=media`
+      };
+      const desertRef = ref(storage, req.imageName);
+      await deleteObject(desertRef);
+    }
+
     const _ = await updateUser(idUser, userBody);
     const user = await getUserById(idUser);
     res.status(200).json({
       meta: {
         status: "success",
-        message: "Book updated successfully",
+        message: "User updated successfully",
         code: 200,
       },
       data: {
