@@ -8,19 +8,21 @@ const uploadMultiple = multer({
   limits: { fileSize: 1000000 },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
-  },
+  }
 }).array("image", 12);
 
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 1000000 },
   fileFilter: async function (req, file, cb) {
-    checkFileType(file, cb);
-  },
+  checkFileType(file, cb);
+  }
+
 }).single("image");
 
 // // Check file Type
 function checkFileType(file, cb) {
+
   // Allowed ext
   const fileTypes = /jpeg|jpg|png|gif/;
   // Check ext
@@ -35,4 +37,6 @@ function checkFileType(file, cb) {
   }
 }
 
+
 module.exports = { uploadMultiple, upload };
+
