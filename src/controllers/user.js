@@ -121,7 +121,7 @@ exports.getUserById = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: `The user has been successfully login`,
+        message: `User retrived successfully!`,
         code: 200,
       },
       data: {
@@ -152,7 +152,7 @@ exports.getAllUser = async (req, res) => {
     res.status(200).json({
       meta: {
         status: "success",
-        message: "Books retrieved successfully",
+        message: "Users retrieved successfully",
         code: 200,
       },
       data: [...modifiedUsers],
