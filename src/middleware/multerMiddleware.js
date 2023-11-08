@@ -17,6 +17,7 @@ const upload = multer({
   fileFilter: async function (req, file, cb) {
   checkFileType(file, cb);
   }
+
 }).single("image");
 
 // // Check file Type
@@ -38,3 +39,4 @@ function checkFileType(file, cb) {
 
 
 module.exports = { uploadMultiple, upload };
+

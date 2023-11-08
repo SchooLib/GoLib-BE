@@ -4,6 +4,10 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+
+var achievementRouter = require('./routes/achievement')
+var userAchievementRouter = require('./routes/userAchievement')
+
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
@@ -28,6 +32,8 @@ app.use(cors());
 app.use("/", indexRouter);
 const prefix = "/api/v1";
 app.use(`${prefix}/users`, usersRouter);
+app.use(`${prefix}/achievements`, achievementRouter);
+app.use(`${prefix}/userAchievements`, userAchievementRouter);
 app.use(`${prefix}/books`, booksRouter);
 app.use(`${prefix}/classifications`, classificationsRouter);
 app.use(`${prefix}/user`,userRouter)
