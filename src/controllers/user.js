@@ -155,9 +155,7 @@ exports.getAllUser = async (req, res) => {
         message: "Books retrieved successfully",
         code: 200,
       },
-      data: {
-        modifiedUsers,
-      },
+      data: [...modifiedUsers],
     });
   } catch (error) {
     res.status(400).json({
@@ -199,7 +197,7 @@ exports.editUser = async (req, res) => {
         ...req.body,
         img: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
           req.imageName.split("/")[1]
-        }?alt=media`
+        }?alt=media`,
       };
       const desertRef = ref(storage, req.imageName);
       await deleteObject(desertRef);
