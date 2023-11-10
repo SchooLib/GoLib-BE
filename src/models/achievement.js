@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // this.hasMany(models.userAchievement, { foreignKey: "achievementId" });
+      Achievement.hasMany(models.userAchievements, { foreignKey: 'achievementId' });
     }
   }
 

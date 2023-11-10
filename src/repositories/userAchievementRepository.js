@@ -1,19 +1,19 @@
-const { UserAchievement } = require("../models");
+const { userAchievements } = require("../models");
 
 exports.create = (data) => {
-  return UserAchievement.create(data);
+  return userAchievements.create(data);
 };
 
 exports.reads = () => {
-  return UserAchievement.findAll();
+  return userAchievements.findAll();
 };
 
 exports.readOne = (id) => {
-  return UserAchievement.findOne({ where: { id } });
+  return userAchievements.findOne({ where: { id } });
 };
 
 exports.update = (id, data) => {
-  return UserAchievement.update(data, {
+  return userAchievements.update(data, {
     where: {
       id,
     },

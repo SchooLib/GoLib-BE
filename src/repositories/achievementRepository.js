@@ -4,8 +4,11 @@ exports.create = (data) => {
   return Achievement.create(data);
 };
 
-exports.reads = () => {
-  return Achievement.findAll();
+exports.reads = (limit, offset) => {
+  return Achievement.findAndCountAll({
+    limit,
+    offset: offset * limit,
+  });
 };
 
 exports.readOne = (id) => {

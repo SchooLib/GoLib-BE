@@ -2,19 +2,21 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class UserAchievement extends Model {
+  class userAchievements extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // this.belongsTo(models.User, { foreignKey: "userId" });
-      // this.belongsTo(models.achievement, { foreignKey: "achievementId" });
+      userAchievements.belongsTo(models.User, { foreignKey: "userId" });
+      userAchievements.belongsTo(models.Achievement, {
+        foreignKey: "achievementId",
+      });
     }
   }
 
-  UserAchievement.init(
+  userAchievements.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -22,27 +24,19 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUIDV4,
         allowNull: false,
       },
       achievementId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
+        type: DataTypes.UUIDV4,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: "userAchievement",
+      modelName: "userAchievements",
       timestamps: true,
     }
   );
-  return UserAchievement;
+  return userAchievements;
 };
