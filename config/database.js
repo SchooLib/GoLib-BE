@@ -1,4 +1,10 @@
-const {dbUsername, dbPassword, dbDialect, dbHost, dbName}= require("./config")
+const {
+  dbUsername,
+  dbPassword,
+  dbDialect,
+  dbHost,
+  dbName,
+} = require("./config");
 
 module.exports = {
   development: {
@@ -8,18 +14,12 @@ module.exports = {
     host: dbHost,
     dialect: dbDialect,
   },
-  test: {
-    username: "root",
-    password: null,
-    database: "database_test",
-    host: "127.0.0.1",
-    dialect: "mysql",
-  },
   production: {
-    username: "root",
-    password: null,
-    database: "database_production",
-    host: "127.0.0.1",
-    dialect: "mysql",
+    dialect: dbDialect,
+    port: 50013,
+    username: dbUsername,
+    password: dbPassword,
+    database: dbName,
+    host: dbHost,
   },
 };
