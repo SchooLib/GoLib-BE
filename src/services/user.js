@@ -25,8 +25,8 @@ exports.getUserById = (id) => {
   return repositories.getUserById(id);
 };
 
-exports.getAllUsers = () => {
-  return repositories.getAllUsers();
+exports.getAllUsers = (limit, offset) => {
+  return repositories.getAllUsers(limit, offset);
 };
 
 exports.updateUser = (id, data) => {

@@ -9,6 +9,9 @@ const {
   updateAchievement,
   deleteAchievement,
 } = require("../services/achievementServices");
+const { updateUser, getUserById } = require("../services/user");
+const { createUserAchievement } = require("../services/userAchievementService");
+const { pagintaion } = require("../helper/pagination");
 
 // Create Achievement
 exports.addAchievement = async (req, res) => {
@@ -49,25 +52,12 @@ exports.showAllAchievements = async (req, res) => {
     const offsetAsNumber = Number.parseInt(req.query.page);
     const limitAsNumber = Number.parseInt(req.query.limit);
 
-    let page = 0;
-    if (!Number.isNaN(offsetAsNumber) && offsetAsNumber > 0) {
-      page = offsetAsNumber;
-    }
-
-    let size = 10;
-    if (
-      !Number.isNaN(limitAsNumber) &&
-      limitAsNumber > 0 &&
-      limitAsNumber < 10
-    ) {
-      size = limitAsNumber;
-    }
+    const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
 
     const achievements = await readAllAchievements(size, page);
-    console.log(achievements);
 
     // Map the achievements and create a modified response
-    const modifiedAchievements = achievements.map((achievement) => {
+    const modifiedAchievements = achievements.rows.map((achievement) => {
       // Include only the necessary properties
       return {
         id: achievement.id,
@@ -236,12 +226,12 @@ exports.removeAchievement = async (req, res) => {
         config.firebaseUser,
         config.firebaseAuth
       );
-      const desertRef = ref(storage, achievement.image)
+      const desertRef = ref(storage, achievement.image);
       await deleteObject(desertRef);
     }
 
     const deletedAchievement = await deleteAchievement(achievement);
-    
+
     res.status(200).json({
       meta: {
         code: 200,
@@ -249,6 +239,42 @@ exports.removeAchievement = async (req, res) => {
         message: "Successfully deleted achievement!",
       },
       data: deletedAchievement,
+    });
+  } catch (error) {
+    res.status(400).json({
+      meta: {
+        code: 400,
+        status: "failed",
+        message: error.message,
+      },
+      data: {},
+    });
+  }
+};
+
+exports.claimAchievement = async (req, res) => {
+  try {
+    const { achievementId } = req.body;
+
+    await createUserAchievement({
+      achievementId,
+      userId: req.user.id,
+    });
+
+    const achievement = await readAchievement(achievementId);
+
+    const user = await getUserById(req.user.id);
+    await updateUser(req.user.id, {
+      point: achievement.dataValues.achive_point + user.point,
+    });
+
+    res.status(200).json({
+      meta: {
+        code: 200,
+        status: "success",
+        message: `achievement claimed successfully! user got ${achievement.dataValues.achive_point} point`,
+      },
+      data: {},
     });
   } catch (error) {
     res.status(400).json({

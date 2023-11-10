@@ -15,6 +15,7 @@ const { ref, deleteObject } = require("firebase/storage");
 const config = require("../../config/config");
 const { signInWithEmailAndPassword } = require("firebase/auth");
 const { storage, auth } = require("../../config/firebase");
+const { pagintaion } = require("../helper/pagination");
 
 exports.createUser = async (req, res) => {
   try {
@@ -86,6 +87,7 @@ exports.loginUserAdmin = async (req, res) => {
     res.status(400).json(notFound(error));
   }
 };
+
 exports.loginUser = async (req, res) => {
   try {
     let data = req.body;
@@ -135,8 +137,16 @@ exports.getUserById = async (req, res) => {
 
 exports.getAllUser = async (req, res) => {
   try {
-    const users = await getAllUsers();
-    const modifiedUsers = users.map((user) => {
+    const offsetAsNumber = Number.parseInt(req.query.page);
+    const limitAsNumber = Number.parseInt(req.query.limit);
+
+    const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
+
+    const users = await getAllUsers(size, page);
+
+    console.log({ users });
+
+    const modifiedUsers = users.rows.map((user) => {
       let data = user.dataValues;
       return {
         id: data.id,
@@ -145,6 +155,8 @@ exports.getAllUser = async (req, res) => {
         point: data.point,
         isPasswordChange: data.isPasswordChange,
         img: data.img,
+        achievements: data.achievements,
+        reviews: data.reviews,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
       };
@@ -155,7 +167,12 @@ exports.getAllUser = async (req, res) => {
         message: "Users retrieved successfully",
         code: 200,
       },
-      data: [...modifiedUsers],
+      data: {
+        totalContents: users.count,
+        totalPages: Math.ceil(users.count / size),
+        currentPage: page + 1,
+        contents: [...modifiedUsers],
+      },
     });
   } catch (error) {
     res.status(400).json({

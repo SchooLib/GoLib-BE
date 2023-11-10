@@ -16,6 +16,7 @@ const {
 const { ref, deleteObject } = require("firebase/storage");
 const config = require("../../config/config");
 const { updateUser, getUserById } = require("../services/user");
+const { pagintaion } = require("../helper/pagination");
 
 exports.addBook = async (req, res) => {
   try {
@@ -56,26 +57,18 @@ exports.addBook = async (req, res) => {
   }
 };
 
+
+
 exports.retriveBooks = async (req, res) => {
   try {
     const offsetAsNumber = Number.parseInt(req.query.page);
     const limitAsNumber = Number.parseInt(req.query.limit);
 
-    let page = 0;
-    if (!Number.isNaN(offsetAsNumber) && offsetAsNumber > 0) {
-      page = offsetAsNumber;
-    }
+    const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
 
-    let size = 1000000;
-    if (
-      !Number.isNaN(limitAsNumber) &&
-      limitAsNumber > 0 &&
-      limitAsNumber < 1000000
-    ) {
-      size = limitAsNumber;
-    }
 
     const books = await readBooks(size, page);
+    // const books = await readBooks(pageResult.size, pageResult.page);
 
     // Map the books and create a modified response
     const modifiedBooks = books.rows.map((book) => {

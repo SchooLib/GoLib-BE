@@ -6,6 +6,7 @@ exports.createBook = (data) => {
 };
 
 exports.readBooks = (limit, offset) => {
+
   return bookRepository.read(limit, offset);
 };
 

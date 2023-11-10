@@ -5,14 +5,20 @@ exports.create = (data) => {
 };
 
 exports.read = (limit, offset) => {
+
   return books.findAndCountAll({
     limit,
     offset: offset * limit,
     include: [
       {
         model: bookReviews,
-        attributes: ["id"],
+        attributes: ["id", "content", "rating", "userId"],
         as: "reviews",
+        include: {
+          model: User,
+          attributes: ["username", "img"],
+          as: "user"
+        }
       },
       {
         model: classifications,
