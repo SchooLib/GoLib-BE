@@ -4,14 +4,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-
-var achievementRouter = require('./routes/achievement')
-var userAchievementRouter = require('./routes/userAchievement')
+var achievementRouter = require("./routes/achievement");
+var userAchievementRouter = require("./routes/userAchievement");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
-const userRouter=require("./routes/users")
+const userRouter = require("./routes/users");
 const classificationsRouter = require("./routes/classifications");
 
 const cors = require("cors");
@@ -36,7 +35,7 @@ app.use(`${prefix}/achievements`, achievementRouter);
 app.use(`${prefix}/userAchievements`, userAchievementRouter);
 app.use(`${prefix}/books`, booksRouter);
 app.use(`${prefix}/classifications`, classificationsRouter);
-app.use(`${prefix}/user`,userRouter)
+app.use(`${prefix}/user`, userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
