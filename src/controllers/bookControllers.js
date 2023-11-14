@@ -57,15 +57,12 @@ exports.addBook = async (req, res) => {
   }
 };
 
-
-
 exports.retriveBooks = async (req, res) => {
   try {
     const offsetAsNumber = Number.parseInt(req.query.page);
     const limitAsNumber = Number.parseInt(req.query.limit);
 
     const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
-
 
     const books = await readBooks(size, page);
     // const books = await readBooks(pageResult.size, pageResult.page);
