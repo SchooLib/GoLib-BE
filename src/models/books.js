@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         through: "bookClassifications",
       });
       this.hasMany(models.bookReviews, {
-        foreignKey: 'bookId',
-        as: 'reviews' // this is an alias for the association
+        foreignKey: "bookId",
+        as: "reviews", // this is an alias for the association
       });
     }
   }
@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       title: DataTypes.STRING,
+      desc: DataTypes.STRING(15000),
       image: DataTypes.STRING,
       publisher: DataTypes.STRING,
       year: DataTypes.STRING,

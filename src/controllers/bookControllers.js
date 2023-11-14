@@ -76,6 +76,7 @@ exports.retriveBooks = async (req, res) => {
       return {
         id: book.id,
         title: book.title,
+        desc: book.desc,
         image: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
           book.image.split("/")[1]
         }?alt=media`,
