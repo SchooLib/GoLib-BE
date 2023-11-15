@@ -117,6 +117,11 @@ exports.loginUser = async (req, res) => {
   }
 };
 exports.getUserById = async (req, res) => {
+  const stat = (user, clasif) => {
+    return user?.dataValues.reviews.filter(
+      (r) => r.book?.classifications[0].name === clasif
+    ).length;
+  };
   try {
     const idUser = req.params.idUser;
     const user = await getUserById(idUser);
@@ -128,6 +133,17 @@ exports.getUserById = async (req, res) => {
       },
       data: {
         ...user?.dataValues,
+        stat: {
+          "Karya Umum": 0 || stat(user, "Karya Umum"),
+          Filsafat: 0 || stat(user, "Filsafat"),
+          "Ilmu Sosial": 0 || stat(user, "Ilmu Sosial"),
+          Bahasa: 0 || stat(user, "Bahasa"),
+          "Ilmu Murni": 0 || stat(user, "Ilmu Murni"),
+          "Pengetahuan Praktis": 0 || stat(user, "Pengetahuan Praktis"),
+          "Kesenian dan Hiburan": 0 || stat(user, "Kesenian dan Hiburan"),
+          Kesusastraan: 0 || stat(user, "Kesusastraan"),
+          Sejarah: 0 || stat(user, "Sejarah"),
+        },
       },
     });
   } catch (err) {
@@ -143,8 +159,6 @@ exports.getAllUser = async (req, res) => {
     const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
 
     const users = await getAllUsers(size, page);
-
-    console.log({ users });
 
     const modifiedUsers = users.rows.map((user) => {
       let data = user.dataValues;

@@ -13,7 +13,7 @@ const uploadMultiple = multer({
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 10000000 },
   fileFilter: async function (req, file, cb) {
   checkFileType(file, cb);
   }

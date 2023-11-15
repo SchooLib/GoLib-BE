@@ -57,15 +57,12 @@ exports.addBook = async (req, res) => {
   }
 };
 
-
-
 exports.retriveBooks = async (req, res) => {
   try {
     const offsetAsNumber = Number.parseInt(req.query.page);
     const limitAsNumber = Number.parseInt(req.query.limit);
 
     const { page, size } = pagintaion(offsetAsNumber, limitAsNumber);
-
 
     const books = await readBooks(size, page);
     // const books = await readBooks(pageResult.size, pageResult.page);
@@ -76,6 +73,7 @@ exports.retriveBooks = async (req, res) => {
       return {
         id: book.id,
         title: book.title,
+        desc: book.desc,
         image: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
           book.image.split("/")[1]
         }?alt=media`,

@@ -10,6 +10,7 @@ module.exports = {
         primaryKey: true,
       },
       title: { type: Sequelize.STRING, allowNull: false },
+      desc: { type: Sequelize.STRING(15000), allowNull: false },
       image: { type: Sequelize.STRING, allowNull: false },
       publisher: { type: Sequelize.STRING, allowNull: false },
       year: { type: Sequelize.STRING, allowNull: false },
