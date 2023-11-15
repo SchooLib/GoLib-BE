@@ -1,12 +1,12 @@
-FROM node:18.17.0
+FROM node:latest
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json yarn.lock ./
 
-RUN npm install
+RUN yarn
 
-COPY .. ..
+COPY . .
 
 EXPOSE 3000
 
