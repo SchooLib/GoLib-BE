@@ -1,11 +1,10 @@
 const { books, classifications, bookReviews, User } = require("../models");
 
 exports.create = (data) => {
-  return books.create(data);
+  return books.create(data)
 };
 
 exports.read = (limit, offset) => {
-
   return books.findAndCountAll({
     limit,
     offset: offset * limit,
@@ -17,8 +16,8 @@ exports.read = (limit, offset) => {
         include: {
           model: User,
           attributes: ["username", "img"],
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
         model: classifications,
@@ -43,8 +42,8 @@ exports.readOne = (id) => {
         include: {
           model: User,
           attributes: ["username", "img"],
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
         model: classifications,

@@ -26,11 +26,13 @@ exports.addBook = async (req, res) => {
     });
 
     if (req.body.classifications) {
-      createClassificationBooks({
+      await createClassificationBooks({
         bookId: newBook.id,
         classificationId: req.body.classifications,
       });
     }
+
+    const book = await readBook(newBook?.dataValues.id);
 
     res.status(200).json({
       meta: {
@@ -39,9 +41,9 @@ exports.addBook = async (req, res) => {
         code: 200,
       },
       data: {
-        ...newBook?.dataValues,
+        ...book?.dataValues,
         image: `https://firebasestorage.googleapis.com/v0/b/golib-59a06.appspot.com/o/images%2F${
-          newBook.image.split("/")[1]
+          book.image.split("/")[1]
         }?alt=media`,
       },
     });
