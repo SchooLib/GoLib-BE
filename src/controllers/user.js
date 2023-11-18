@@ -129,7 +129,7 @@ exports.loginUser = async (req, res) => {
 exports.getUserById = async (req, res) => {
   const stat = (user, clasif) => {
     return user?.dataValues.reviews?.filter(
-      (r) => r.book?.classifications[0].name === clasif
+      (r) => r.book?.classifications[0]?.name === clasif
     ).length;
   };
   try {
