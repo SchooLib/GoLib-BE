@@ -276,11 +276,18 @@ exports.reviewBook = async (req, res) => {
 
     let bonusPoints = 0;
 
+    console.log({
+      content: req.body.content.toLowerCase(),
+      key: req.body.key.map((k) => (k = k.toLowerCase())),
+    });
+
     if (req.body.content) {
       const totalKeys = req.body.key.length;
-      const includedKeys = req.body.key.filter((keyword) =>
-        req.body.content.includes(keyword)
-      ).length;
+      const includedKeys = req.body.key
+        .map((k) => (k = k.toLowerCase()))
+        .filter((keyword) =>
+          req.body.content.toLowerCase().includes(keyword)
+        ).length;
 
       if (includedKeys === totalKeys) {
         bonusPoints = req.body.point;

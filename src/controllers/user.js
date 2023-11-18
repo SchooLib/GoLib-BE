@@ -1,5 +1,5 @@
 const { succes, notFound } = require("../helper/response");
-const { getUserByNisn } = require("../repositories/user");
+const { getUserByNisn, getUserByUsername } = require("../repositories/user");
 const {
   createUser,
   getOneLogin,
@@ -18,10 +18,16 @@ const { storage, auth } = require("../../config/firebase");
 const { pagintaion } = require("../helper/pagination");
 
 exports.createUser = async (req, res) => {
+  const stat = (user, clasif) => {
+    return user?.dataValues.reviews.filter(
+      (r) => r.book?.classifications[0].name === clasif
+    ).length;
+  };
+
   try {
     let existUser;
     if (req.body.username) {
-      existUser = await getUserByNisn(req.body.username);
+      existUser = await getUserByUsername(req.body.username);
     } else {
       existUser = await getUserByNisn(req.body.nisn);
     }
@@ -44,7 +50,10 @@ exports.createUser = async (req, res) => {
         req.imageName.split("/")[1]
       }?alt=media`,
     });
-    res.status(200).json(succes("user", newUser));
+
+    const user = await getUserById(newUser.id);
+
+    res.status(200).json(succes("user", user));
   } catch (error) {
     res.status(400).json(notFound(error));
   }
