@@ -125,15 +125,18 @@ exports.loginUser = async (req, res) => {
     res.status(400).json(notFound(error));
   }
 };
+
 exports.getUserById = async (req, res) => {
   const stat = (user, clasif) => {
-    return user?.dataValues.reviews.filter(
+    return user?.dataValues.reviews?.filter(
       (r) => r.book?.classifications[0].name === clasif
     ).length;
   };
   try {
     const idUser = req.params.idUser;
+
     const user = await getUserById(idUser);
+
     res.status(200).json({
       meta: {
         status: "success",

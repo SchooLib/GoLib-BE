@@ -1,4 +1,11 @@
-const { User, userAchievements, Achievement, bookReviews, books, classifications } = require("../models");
+const {
+  User,
+  userAchievements,
+  Achievement,
+  bookReviews,
+  books,
+  classifications,
+} = require("../models");
 
 exports.createUser = (data) => {
   return User.create(data);
@@ -11,7 +18,7 @@ exports.getOneUser = (data) => {
       {
         model: userAchievements,
         attributes: ["id"],
-        as: "achievements"
+        as: "achievements",
       },
       {
         model: bookReviews,
@@ -30,12 +37,12 @@ exports.getOneLoginAdmin = (data) => {
 
 exports.getUserById = (id) => {
   return User.findOne({
-    where: { id: id },
+    where: { id },
     include: [
       {
         model: userAchievements,
         attributes: ["id", "achievementId"],
-        as: "achievements"
+        as: "achievements",
       },
       {
         model: bookReviews,
@@ -48,9 +55,9 @@ exports.getUserById = (id) => {
           include: {
             model: classifications,
             as: "classifications",
-            attributes: ["name"]
-          }
-        }
+            attributes: ["name"],
+          },
+        },
       },
     ],
   });
@@ -78,7 +85,7 @@ exports.getAllUsers = async (limit, offset) => {
         {
           model: userAchievements,
           attributes: ["id", "achievementId"],
-          as: "achievements"
+          as: "achievements",
         },
         {
           model: bookReviews,
@@ -91,9 +98,9 @@ exports.getAllUsers = async (limit, offset) => {
             include: {
               model: classifications,
               as: "classifications",
-              attributes: ["name"]
-            }
-          }
+              attributes: ["name"],
+            },
+          },
         },
       ],
     });
