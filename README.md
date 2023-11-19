@@ -56,6 +56,32 @@ GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS,
 3. Set up the database and environment variables by following `.env.example` file.
 4. Run the application using `yarn dev`.
 
+## Running the Application with Docker
+You can easily run the GoLib application using Docker. This method abstracts the setup process and runs the application in a containerized environment.
+- Ensure you have [Docker](https://www.docker.com/get-started) installed on your system.
+
+1. **Pull the Docker Image**:
+   - Pull the latest Docker image of the GoLib application from Docker Hub:
+     ```bash
+     docker pull hyrezaalf/gigih
+     ```
+
+2. **Run the Docker Container**:
+   - After pulling the image, you can run the application as a Docker container. Replace `[port]` with the port number you want to use (e.g., 3000):
+     ```bash
+     docker run -p [port]:3000 hyrezaalf/gigih
+     ```
+   - For example, to run it on port 3000:
+     ```bash
+     docker run -p 3000:3000 hyrezaalf/gigih
+     ```
+
+3. **Accessing the Application**:
+   - Once the container is running, you can access the GoLib application at `http://localhost:[port]/`. If you used port 3000, it would be `http://localhost:3000/`.
+
+This method provides a quick and straightforward way to get the GoLib application up and running without the need for manual environment setup.
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
