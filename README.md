@@ -42,10 +42,10 @@ GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS,
 |                 | POST   | `/api/v1/auth/login`            | Login for users.                          | No                      |
 
 
-##To run the project locally, follow these steps:
+## To run the project locally, follow these steps:
 
-1. Clone the repository.
-2. Install the required dependencies.
+1. Clone this repository `git clone https://github.com/SchooLib/GoLib-BE`.
+2. Install the required dependencies using `yarn`.
 3. Set up the database and environment variables.
 4. Run the application using `yarn dev`.
 
