@@ -2,9 +2,13 @@
 
 GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS, NodeJS, Firebase, and Docker. It provides a comprehensive set of endpoints for managing achievements, books, classifications, users, and authentication.
 
+## Database Schema
+- **Database Documentation**: [View Database Schema](https://dbdocs.io/hy.rezaalfanda/LIB-GIGIH)
+- <iframe width="560" height="315" src='https://dbdiagram.io/e/651ed1d5ffbf5169f01c7dc9/65599d323be1495787469fc7'> </iframe>
+
+
 ## Documentation Links
 
-- **Database Documentation**: [View Database Schema](https://dbdocs.io/hy.rezaalfanda/LIB-GIGIH)
 - **Postman Documentation**: [View API Endpoints and Examples](https://documenter.getpostman.com/view/15041975/2s9YRGxpFf)
 
 
