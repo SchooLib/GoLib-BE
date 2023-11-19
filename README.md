@@ -1,6 +1,8 @@
 # GoLib RESTful API
 
-GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS, NodeJS, Firebase, and Docker. It provides a comprehensive set of endpoints for managing achievements, books, classifications, users, and authentication.
+GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS, NodeJS, Firebase, and Docker. It provides a comprehensive set of endpoints for managing achievements, books, classifications, users, and authentication. The GoLib API is already deployed and accessible online at: [http://103.193.176.43:3000/](http://103.193.176.43:3000/)
+
+
 
 ## Database Schema
 - **Database Documentation**: [View Database Schema](https://dbdocs.io/hy.rezaalfanda/LIB-GIGIH)
