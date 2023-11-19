@@ -4,7 +4,7 @@ GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS,
 
 ## Database Schema
 - **Database Documentation**: [View Database Schema](https://dbdocs.io/hy.rezaalfanda/LIB-GIGIH)
-- <iframe width="560" height="315" src='https://dbdiagram.io/e/651ed1d5ffbf5169f01c7dc9/65599d323be1495787469fc7'> </iframe>
+<iframe width="560" height="315" src='https://dbdiagram.io/e/651ed1d5ffbf5169f01c7dc9/65599d323be1495787469fc7'> </iframe>
 
 
 ## Documentation Links
