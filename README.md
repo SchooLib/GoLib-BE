@@ -53,7 +53,7 @@ GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS,
 
 1. Clone this repository `git clone https://github.com/SchooLib/GoLib-BE`.
 2. Install the required dependencies using `yarn`.
-3. Set up the database and environment variables by following `.env.example`.
+3. Set up the database and environment variables by following `.env.example` file.
 4. Run the application using `yarn dev`.
 
 ## License
