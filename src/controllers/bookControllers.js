@@ -276,11 +276,6 @@ exports.reviewBook = async (req, res) => {
 
     let bonusPoints = 0;
 
-    console.log({
-      content: req.body.content.toLowerCase(),
-      key: req.body.key.map((k) => (k = k.toLowerCase())),
-    });
-
     if (req.body.content) {
       const totalKeys = req.body.key.length;
       const includedKeys = req.body.key
@@ -297,13 +292,17 @@ exports.reviewBook = async (req, res) => {
         bonusPoints = req.body.point * 0.5;
       }
       const user = await getUserById(req.user.id);
-      await updateUser(req.user.id, { point: bonusPoints + user.point });
+      await updateUser(req.user.id, {
+        point: Math.floor(bonusPoints) + user.point,
+      });
     }
 
     res.json({
       meta: {
         status: "success",
-        message: `Book review posted successfully! user got ${bonusPoints} point`,
+        message: `Book review posted successfully! user got ${Math.floor(
+          bonusPoints
+        )} point`,
         code: 200,
       },
       data: newReview,
