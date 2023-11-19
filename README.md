@@ -41,3 +41,19 @@ GoLib is a RESTful API built with a tech stack comprising PostgreSQL, ExpressJS,
 | **Auth**        | POST   | `/api/v1/auth/admin/login`      | Login for admin.                          | No                      |
 |                 | POST   | `/api/v1/auth/login`            | Login for users.                          | No                      |
 
+
+##To run the project locally, follow these steps:
+
+1. Clone the repository.
+2. Install the required dependencies.
+3. Set up the database and environment variables.
+4. Run the application using `yarn dev`.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you find this project useful, please consider giving it a ⭐️ on [GitHub](https://github.com/SchooLib/GoLib-BE). Your support is greatly appreciated! 😄
+
